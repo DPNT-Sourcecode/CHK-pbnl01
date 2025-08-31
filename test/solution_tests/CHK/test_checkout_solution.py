@@ -1,6 +1,7 @@
 from lib.solutions.CHK.checkout_solution import CheckoutSolution
 
 
-class TestHello:
-    def test_craftsman(self):
-        assert CheckoutSolution().checkout(skus="Craftsman") == "Hello, Craftsman!"
+class TestCheckout:
+    def test_empty_string(self):
+        assert CheckoutSolution().checkout(skus="") == -1
+
