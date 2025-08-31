@@ -10,7 +10,3 @@ class TestHello:
 
     def test_empty_string(self):
         assert HelloSolution().hello(friend_name="") == "Hello, World!"
-
-
-
-
