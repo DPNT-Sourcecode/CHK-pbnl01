@@ -57,9 +57,79 @@ class CheckoutSolution:
             {"items": ["S", "T", "X", "Y", "Z"], "qty": 3, "price": 45}
         ]
 
-    # skus = unicode string
-    def checkout(self, skus) -> int:
+    # # skus = unicode string
+    # def checkout(self, skus) -> int:
 
+    #     if not isinstance(skus, str):
+    #         return -1
+    #     if skus is None:
+    #         return -1
+    #     if skus == "":
+    #         return 0
+
+    #     counts: Counter[str] = Counter(skus)
+
+    #     if any(char not in self.PRICES for char in skus):
+    #         return -1
+
+    #     chargable_items = counts.copy()
+
+    #     for item, rule in self.FREE_OFFERS.items():
+    #         if item in counts:
+    #             free_item = rule["item"]
+    #             free_qty = rule["qty"]
+    #             free_items = counts[item] // free_qty
+    #             if free_items and free_item in chargable_items:
+    #                 chargable_items[free_item] = max(
+    #                     0, chargable_items[free_item] - free_items
+    #                 )
+
+    #     total: int = 0
+
+    #     for g in self.GROUP_OFFERS:
+    #         items = g["items"]
+    #         group_qty = g["qty"]
+    #         group_price = g["price"]
+
+    #         total_eligible = sum(chargable_items.get(item, 0) for item in items)
+    #         if total_eligible < group_qty:
+    #             continue
+
+    #         groups = total_eligible // group_qty
+    #         units_to_discount = groups * group_qty
+    #         if groups == 0:
+    #             continue
+
+    #         for items in sorted(items, key=lambda x: self.PRICES[x], reverse=True):
+    #             if units_to_discount == 0:
+    #                 break
+    #             remove = min(chargable_items.get(items, 0), units_to_discount)
+
+    #             if remove > 0:
+    #                 chargable_items[items] -= remove
+    #                 units_to_discount -= remove
+
+    #         total += groups * group_price
+
+    #     for item, qty in chargable_items.items():
+    #         if qty <= 0:
+    #             continue
+
+    #         if item in self.OFFERS:
+    #             for bundle_size, bundle_price in self.OFFERS[item]:
+    #                 bundles = qty // bundle_size
+    #                 if bundles:
+    #                     total += bundles * bundle_price
+    #                     qty -= bundles * bundle_size
+    #             if qty:
+    #                 total += qty * self.PRICES[item]
+
+    #         else:
+    #             total += qty * self.PRICES[item]
+
+    #     return total
+
+    def checkout(self, skus: str) -> int:
         if not isinstance(skus, str):
             return -1
         if skus is None:
@@ -72,59 +142,3 @@ class CheckoutSolution:
         if any(char not in self.PRICES for char in skus):
             return -1
 
-        chargable_items = counts.copy()
-
-        for item, rule in self.FREE_OFFERS.items():
-            if item in counts:
-                free_item = rule["item"]
-                free_qty = rule["qty"]
-                free_items = counts[item] // free_qty
-                if free_items and free_item in chargable_items:
-                    chargable_items[free_item] = max(
-                        0, chargable_items[free_item] - free_items
-                    )
-
-        total: int = 0
-
-        for g in self.GROUP_OFFERS:
-            items = g["items"]
-            group_qty = g["qty"]
-            group_price = g["price"]
-
-            total_eligible = sum(chargable_items.get(item, 0) for item in items)
-            if total_eligible < group_qty:
-                continue
-
-            groups = total_eligible // group_qty
-            units_to_discount = groups * group_qty
-            if groups == 0:
-                continue
-
-            for items in sorted(items, key=lambda x: self.PRICES[x], reverse=True):
-                if units_to_discount == 0:
-                    break
-                remove = min(chargable_items.get(items, 0), units_to_discount)
-
-                if remove > 0:
-                    chargable_items[items] -= remove
-                    units_to_discount -= remove
-
-            total += groups * group_price
-
-        for item, qty in chargable_items.items():
-            if qty <= 0:
-                continue
-
-            if item in self.OFFERS:
-                for bundle_size, bundle_price in self.OFFERS[item]:
-                    bundles = qty // bundle_size
-                    if bundles:
-                        total += bundles * bundle_price
-                        qty -= bundles * bundle_size
-                if qty:
-                    total += qty * self.PRICES[item]
-
-            else:
-                total += qty * self.PRICES[item]
-
-        return total
