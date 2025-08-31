@@ -142,3 +142,19 @@ class CheckoutSolution:
         if any(char not in self.PRICES for char in skus):
             return -1
 
+        chargable_items: Counter = self._apply_free_offers(counts=counts)
+
+    def _apply_free_offers(self, counts: Counter) -> Counter:
+        chargable_items = counts.copy()
+
+        for item, rule in self.FREE_OFFERS.items():
+            if item in counts:
+                free_item = rule["item"]
+                free_qty = rule["qty"]
+                free_items = counts[item] // free_qty
+                if free_items and free_item in chargable_items:
+                    chargable_items[free_item] = max(
+                        0, chargable_items[free_item] - free_items
+                    )
+
+
