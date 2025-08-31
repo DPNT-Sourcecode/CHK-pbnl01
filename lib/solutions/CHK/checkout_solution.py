@@ -40,7 +40,7 @@ class CheckoutSolution:
             "B": [(2, 45)],
             "F": [(3, 20)],
             "H": [(10, 80), (5, 45)],
-            "K": [(2, 150)],
+            "K": [(2, 120)],
             "P": [(5, 200)],
             "Q": [(3, 80)],
             "U": [(4, 120)],
@@ -51,6 +51,10 @@ class CheckoutSolution:
             "N": {"item": "M", "qty": 3},
             "R": {"item": "Q", "qty": 3},
         }
+
+        GROUP_OFFERS: list[dict[str, Any]] = [
+            {"items": ["S", "T", "X", "Y", "Z"], "size": 3, "price": 45}
+        ]
 
         if not isinstance(skus, str):
             return -1
@@ -94,4 +98,5 @@ class CheckoutSolution:
                 total += qty * PRICES[item]
 
         return total
+
 
