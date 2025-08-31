@@ -6,13 +6,16 @@ from typing import Any, Dict
 class CheckoutSolution:
 
     # skus = unicode string
-    def checkout(self, skus):
-        PRICES: Dict[str, int] = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 40}
+    def checkout(self, skus) -> int:
+        PRICES: Dict[str, int] = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 40, "F": 10}
         OFFERS: Dict[str, list[tuple[int, int]]] = {
             "A": [(5, 200), (3, 130)],
             "B": [(2, 45)],
         }
-        FREE_OFFERS: dict[str, dict[str, Any]] = {"E": {"item": "B", "qty": 2}}
+        FREE_OFFERS: dict[str, dict[str, Any]] = {
+            "E": {"item": "B", "qty": 2},
+            "F": {"item": "F", "qty": 1},
+        }
 
         if not isinstance(skus, str):
             return -1
@@ -56,3 +59,4 @@ class CheckoutSolution:
                 total += qty * PRICES[item]
 
         return total
+
