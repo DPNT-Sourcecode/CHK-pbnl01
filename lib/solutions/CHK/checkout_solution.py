@@ -18,7 +18,7 @@ class CheckoutSolution:
             "H": 10,
             "I": 35,
             "J": 60,
-            "K": 80,
+            "K": 70,
             "L": 90,
             "M": 15,
             "N": 40,
@@ -26,14 +26,14 @@ class CheckoutSolution:
             "P": 50,
             "Q": 30,
             "R": 50,
-            "S": 30,
+            "S": 20,
             "T": 20,
             "U": 40,
             "V": 50,
             "W": 20,
-            "X": 90,
-            "Y": 10,
-            "Z": 50,
+            "X": 17,
+            "Y": 20,
+            "Z": 21,
         }
         OFFERS: Dict[str, list[tuple[int, int]]] = {
             "A": [(5, 200), (3, 130)],
@@ -94,3 +94,4 @@ class CheckoutSolution:
                 total += qty * PRICES[item]
 
         return total
+
