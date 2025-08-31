@@ -39,16 +39,20 @@ class CheckoutSolution:
 
         total: int = 0
 
-        for item, qty in counts.items():
-            price = PRICES[item]
-            if item in OFFERS:
-                bundle_size, bundle_price = OFFERS[item]
-                bundles = qty // bundle_size
-                remainder = qty % bundle_size
-                total += bundles * bundle_price + remainder * price
-            else:
-                total += qty * price
+        for item, qty in chargable_items.items():
+            if qty <= 0:
+                continue
+
+            # price = PRICES[item]
+            # if item in OFFERS:
+            #     bundle_size, bundle_price = OFFERS[item]
+            #     bundles = qty // bundle_size
+            #     remainder = qty % bundle_size
+            #     total += bundles * bundle_price + remainder * price
+            # else:
+            #     total += qty * price
 
         return total
+
 
 
