@@ -7,8 +7,12 @@ class CheckoutSolution:
 
     # skus = unicode string
     def checkout(self, skus):
-        PRICES: Dict[str, int] = {"A": 50, "B": 30, "C": 20, "D": 15}
-        OFFERS: Dict[str, tuple[int, int]] = {"A": (3, 130), "B": (2, 45)}
+        PRICES: Dict[str, int] = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 40}
+        OFFERS: Dict[str, list[tuple[int, int]]] = {
+            "A": [(5, 200), (3, 130)],
+            "B": [(2, 45)],
+        }
+        FREE_OFFERS: Dict[str, dict[str, str | int]] = {"E": {"item": "B", "qty": 2}}
 
         if not isinstance(skus, str):
             return -1
@@ -35,3 +39,4 @@ class CheckoutSolution:
                 total += qty * price
 
         return total
+
