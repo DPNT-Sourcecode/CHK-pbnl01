@@ -11,10 +11,10 @@ class CheckoutSolution:
         OFFERS: Dict[str, list[tuple[int, int]]] = {
             "A": [(5, 200), (3, 130)],
             "B": [(2, 45)],
+            "F": [(3, 20)],
         }
         FREE_OFFERS: dict[str, dict[str, Any]] = {
             "E": {"item": "B", "qty": 2},
-            "F": {"item": "F", "qty": 1},
         }
 
         if not isinstance(skus, str):
@@ -59,4 +59,5 @@ class CheckoutSolution:
                 total += qty * PRICES[item]
 
         return total
+
 
