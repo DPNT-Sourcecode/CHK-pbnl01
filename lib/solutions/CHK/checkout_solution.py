@@ -211,13 +211,14 @@ class CheckoutSolution:
                     if bundles:
                         subtotal += bundles * bundle_price
                         qty -= bundles * bundle_size
-                if qty:
+                if qty > 0:
                     subtotal += qty * self.PRICES[item]
 
             return subtotal
 
     def _sorted_by_price_desc(self, items: Iterable[str]) -> List[str]:
         return sorted(items, key=lambda x: self.PRICES[x], reverse=True)
+
 
 
 
