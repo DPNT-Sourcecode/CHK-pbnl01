@@ -86,11 +86,27 @@ class CheckoutSolution:
         for g in GROUP_OFFERS:
             items = g["items"]
             group_qty = g["qty"]
-            group_price = g["size"]
+            group_price = g["price"]
 
             total_eligible = sum(chargable_items.get(item, 0) for item in items)
             if total_eligible < group_qty:
                 continue
+
+            groups = total_eligible // group_qty
+            units_to_discount = groups * group_size
+            if groups == 0:
+                continue
+
+            for items in sorted(items, key=lambda x: PRICES[x], reverse=True):
+                if units_to_discount == 0:
+                    break
+                remove = min(chargable_items.get(items, 0), units_to_discount)
+
+                if remove > 0:
+                    chargable_items[items] -= remove
+                    units_to_discount -= remove
+
+            total += groups * group_price
 
         for item, qty in chargable_items.items():
             if qty <= 0:
@@ -109,6 +125,7 @@ class CheckoutSolution:
                 total += qty * PRICES[item]
 
         return total
+
 
 
 
