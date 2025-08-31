@@ -18,6 +18,10 @@ class CheckoutSolution:
             return 0
 
         counts: Counter[str] = Counter(skus)
+
+        if any(char not in PRICES for char in skus):
+            return -1
+
         total: int = 0
 
         for item, qty in counts.items():
@@ -31,8 +35,3 @@ class CheckoutSolution:
                 total += qty * price
 
         return total
-
-
-
-
-
