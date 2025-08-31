@@ -39,9 +39,17 @@ class CheckoutSolution:
             "A": [(5, 200), (3, 130)],
             "B": [(2, 45)],
             "F": [(3, 20)],
+            "H": [(10, 80), (5, 45)],
+            "K": [(2, 150)],
+            "P": [(5, 200)],
+            "Q": [(3, 80)],
+            "U": [(4, 120)],
+            "V": [(3, 130), (2, 90)],
         }
         FREE_OFFERS: dict[str, dict[str, Any]] = {
             "E": {"item": "B", "qty": 2},
+            "N": {"item": "M", "qty": 3},
+            "R": {"item": "Q", "qty": 3},
         }
 
         if not isinstance(skus, str):
@@ -86,3 +94,4 @@ class CheckoutSolution:
                 total += qty * PRICES[item]
 
         return total
+
