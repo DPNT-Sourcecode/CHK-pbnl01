@@ -8,4 +8,8 @@ class TestCheckout:
     def test_empty_string(self):
         assert CheckoutSolution().checkout(skus="") == 0
 
+    def test_invalid_type(self):
+        assert CheckoutSolution().checkout(skus=1) == -1
+
+
 
