@@ -13,6 +13,7 @@ class TestCheckout:
 
     def test_invalid_skus(self):
         assert CheckoutSolution().checkout(skus="abcd") == -1
+        assert CheckoutSolution().checkout(skus="a-bAB") == -1
 
     def test_valid_skus(self):
         assert CheckoutSolution().checkout(skus="A") == 50
@@ -30,4 +31,6 @@ class TestCheckout:
         assert CheckoutSolution().checkout(skus="FFF") == 20
         assert CheckoutSolution().checkout(skus="ABDFEFFAA") == 235
         assert CheckoutSolution().checkout(skus="AAABBDFEFFAA") == 320
+        assert CheckoutSolution().checkout(skus="RRRQQQ") == 220
+
 
