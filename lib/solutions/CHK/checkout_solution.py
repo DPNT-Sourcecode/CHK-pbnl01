@@ -151,10 +151,14 @@ class CheckoutSolution:
             if item in counts:
                 free_item = rule["item"]
                 free_qty = rule["qty"]
+
                 free_items = counts[item] // free_qty
                 if free_items and free_item in chargable_items:
                     chargable_items[free_item] = max(
                         0, chargable_items[free_item] - free_items
                     )
+
+        return chargable_items
+
 
 
