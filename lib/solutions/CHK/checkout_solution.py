@@ -6,9 +6,8 @@ from typing import Any, Dict
 
 class CheckoutSolution:
 
-    # skus = unicode string
-    def checkout(self, skus) -> int:
-        PRICES: Dict[str, int] = {
+    def __init__(self):
+        self.PRICES: Dict[str, int] = {
             "A": 50,
             "B": 30,
             "C": 20,
@@ -36,7 +35,8 @@ class CheckoutSolution:
             "Y": 20,
             "Z": 21,
         }
-        OFFERS: Dict[str, list[tuple[int, int]]] = {
+
+        self.OFFERS: Dict[str, list[tuple[int, int]]] = {
             "A": [(5, 200), (3, 130)],
             "B": [(2, 45)],
             "F": [(3, 20)],
@@ -47,15 +47,18 @@ class CheckoutSolution:
             "U": [(4, 120)],
             "V": [(3, 130), (2, 90)],
         }
-        FREE_OFFERS: dict[str, dict[str, Any]] = {
+        self.FREE_OFFERS: dict[str, dict[str, Any]] = {
             "E": {"item": "B", "qty": 2},
             "N": {"item": "M", "qty": 3},
             "R": {"item": "Q", "qty": 3},
         }
 
-        GROUP_OFFERS: list[dict[str, Any]] = [
+        self.GROUP_OFFERS: list[dict[str, Any]] = [
             {"items": ["S", "T", "X", "Y", "Z"], "qty": 3, "price": 45}
         ]
+
+    # skus = unicode string
+    def checkout(self, skus) -> int:
 
         if not isinstance(skus, str):
             return -1
@@ -66,12 +69,12 @@ class CheckoutSolution:
 
         counts: Counter[str] = Counter(skus)
 
-        if any(char not in PRICES for char in skus):
+        if any(char not in self.PRICES for char in skus):
             return -1
 
         chargable_items = counts.copy()
 
-        for item, rule in FREE_OFFERS.items():
+        for item, rule in self.FREE_OFFERS.items():
             if item in counts:
                 free_item = rule["item"]
                 free_qty = rule["qty"]
@@ -83,7 +86,7 @@ class CheckoutSolution:
 
         total: int = 0
 
-        for g in GROUP_OFFERS:
+        for g in self.GROUP_OFFERS:
             items = g["items"]
             group_qty = g["qty"]
             group_price = g["price"]
@@ -93,11 +96,11 @@ class CheckoutSolution:
                 continue
 
             groups = total_eligible // group_qty
-            units_to_discount = groups * group_size
+            units_to_discount = groups * group_qty
             if groups == 0:
                 continue
 
-            for items in sorted(items, key=lambda x: PRICES[x], reverse=True):
+            for items in sorted(items, key=lambda x: self.PRICES[x], reverse=True):
                 if units_to_discount == 0:
                     break
                 remove = min(chargable_items.get(items, 0), units_to_discount)
@@ -112,20 +115,16 @@ class CheckoutSolution:
             if qty <= 0:
                 continue
 
-            if item in OFFERS:
-                for bundle_size, bundle_price in OFFERS[item]:
+            if item in self.OFFERS:
+                for bundle_size, bundle_price in self.OFFERS[item]:
                     bundles = qty // bundle_size
                     if bundles:
                         total += bundles * bundle_price
                         qty -= bundles * bundle_size
                 if qty:
-                    total += qty * PRICES[item]
+                    total += qty * self.PRICES[item]
 
             else:
-                total += qty * PRICES[item]
+                total += qty * self.PRICES[item]
 
         return total
-
-
-
-
