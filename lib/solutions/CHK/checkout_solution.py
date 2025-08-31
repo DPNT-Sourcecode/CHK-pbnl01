@@ -1,7 +1,7 @@
 from collections import Counter
 from math import remainder
 from tokenize import group
-from typing import Any, Dict
+from typing import Any, Dict, Iterable, List
 
 
 class CheckoutSolution:
@@ -197,7 +197,28 @@ class CheckoutSolution:
         return total
 
     def _price_with_offers(self, chargeable_items: Counter) -> int:
-        return 1
+
+        subtotal = 0
+        for item, qty in chargeable_items.items():
+            if qty <= 0:
+                continue
+
+            if item in self.OFFERS:
+                for bundle_size, bundle_price in self.OFFERS[item]:
+                    if qty <= 0:
+                        break
+                    bundles = qty // bundle_size
+                    if bundles:
+                        subtotal += bundles * bundle_price
+                        qty -= bundles * bundle_size
+                if qty:
+                    subtotal += qty * self.PRICES[item]
+
+            return subtotal
+
+    def _sorted_by_price_desc(self, items: Iterable[str]) -> List[str]:
+        return sorted(items, key=lambda x: self.PRICES[x], reverse=True)
+
 
 
 
