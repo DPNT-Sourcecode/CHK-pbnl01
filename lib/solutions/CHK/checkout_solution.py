@@ -1,6 +1,6 @@
 from collections import Counter
 from math import remainder
-from typing import Dict
+from typing import Any, Dict
 
 
 class CheckoutSolution:
@@ -12,7 +12,7 @@ class CheckoutSolution:
             "A": [(5, 200), (3, 130)],
             "B": [(2, 45)],
         }
-        FREE_OFFERS: Dict[str, dict[str, str | int]] = {"E": {"item": "B", "qty": 2}}
+        FREE_OFFERS: dict[str, dict[str, Any]] = {"E": {"item": "B", "qty": 2}}
 
         if not isinstance(skus, str):
             return -1
@@ -25,6 +25,17 @@ class CheckoutSolution:
 
         if any(char not in PRICES for char in skus):
             return -1
+
+        chargable_items = counts.copy()
+        for item, rule in FREE_OFFERS.items():
+            if item in counts:
+                free_item = rule["item"]
+                free_qty = rule["qty"]
+                free_items = counts[item] // free_qty
+                if free_items and free_item in chargable_items:
+                    chargable_items[free_item] = max(
+                        0, chargable_items[free_item] - free_items
+                    )
 
         total: int = 0
 
@@ -39,4 +50,5 @@ class CheckoutSolution:
                 total += qty * price
 
         return total
+
 
