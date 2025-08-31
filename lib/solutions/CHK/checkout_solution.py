@@ -43,16 +43,20 @@ class CheckoutSolution:
             if qty <= 0:
                 continue
 
-            # price = PRICES[item]
-            # if item in OFFERS:
-            #     bundle_size, bundle_price = OFFERS[item]
-            #     bundles = qty // bundle_size
-            #     remainder = qty % bundle_size
-            #     total += bundles * bundle_price + remainder * price
-            # else:
-            #     total += qty * price
+            if item in OFFERS:
+                for bundle_size, bundle_price in OFFERS[item]:
+                    bundles = qty // bundle_size
+                    if bundles:
+                        total += bundles * bundle_price
+                        qty -= bundles * bundle_size
+                if qty:
+                    total += qty * PRICES[item]
+
+            else:
+                total += qty * PRICES[item]
 
         return total
+
 
 
 
