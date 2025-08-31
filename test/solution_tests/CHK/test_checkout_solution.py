@@ -31,7 +31,8 @@ class TestCheckout:
         assert CheckoutSolution().checkout(skus="FFF") == 20
         assert CheckoutSolution().checkout(skus="ABDFEFFAA") == 235
         assert CheckoutSolution().checkout(skus="AAABBDFEFFAA") == 320
-        assert CheckoutSolution().checkout(skus="RRRQQQ") == 210
+        assert CheckoutSolution().checkout(skus="RRRQQQ") == 210  # 3 * 50 + 2 * 30
+
 
 
 
