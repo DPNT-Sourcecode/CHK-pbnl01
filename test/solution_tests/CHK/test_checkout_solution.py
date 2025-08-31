@@ -11,5 +11,22 @@ class TestCheckout:
     def test_invalid_type(self):
         assert CheckoutSolution().checkout(skus=1) == -1
 
+    def test_invalid_skus(self):
+        assert CheckoutSolution().checkout(skus="E") == -1
+        assert CheckoutSolution().checkout(skus="EE") == -1
+        assert CheckoutSolution().checkout(skus="EEEEE") == -1
+        assert CheckoutSolution().checkout(skus="EEEEE") == -1
+
+    def test_valid_skus(self):
+        assert CheckoutSolution().checkout(skus="A") == 50
+        assert CheckoutSolution().checkout(skus="AB") == 80
+        assert CheckoutSolution().checkout(skus="CDBA") == 115
+        assert CheckoutSolution().checkout(skus="AA") == 100
+        assert CheckoutSolution().checkout(skus="AAA") == 130
+        assert CheckoutSolution().checkout(skus="AAAA") == 180
+        assert CheckoutSolution().checkout(skus="AAAAA") == 230
+        assert CheckoutSolution().checkout(skus="AAAAAA") == 260
+
+
 
 
