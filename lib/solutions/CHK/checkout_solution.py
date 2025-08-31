@@ -1,5 +1,6 @@
 from collections import Counter
 from math import remainder
+from tokenize import group
 from typing import Any, Dict
 
 
@@ -53,7 +54,7 @@ class CheckoutSolution:
         }
 
         GROUP_OFFERS: list[dict[str, Any]] = [
-            {"items": ["S", "T", "X", "Y", "Z"], "size": 3, "price": 45}
+            {"items": ["S", "T", "X", "Y", "Z"], "qty": 3, "price": 45}
         ]
 
         if not isinstance(skus, str):
@@ -69,6 +70,7 @@ class CheckoutSolution:
             return -1
 
         chargable_items = counts.copy()
+
         for item, rule in FREE_OFFERS.items():
             if item in counts:
                 free_item = rule["item"]
@@ -80,6 +82,15 @@ class CheckoutSolution:
                     )
 
         total: int = 0
+
+        for g in GROUP_OFFERS:
+            items = g["items"]
+            group_qty = g["qty"]
+            group_price = g["size"]
+
+            total_eligible = sum(chargable_items.get(item, 0) for item in items)
+            if total_eligible < group_qty:
+                continue
 
         for item, qty in chargable_items.items():
             if qty <= 0:
@@ -98,5 +109,6 @@ class CheckoutSolution:
                 total += qty * PRICES[item]
 
         return total
+
 
 
