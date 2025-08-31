@@ -35,4 +35,4 @@ class TestCheckout:
         assert CheckoutSolution().checkout(skus="STX") == 45
         assert CheckoutSolution().checkout(skus="SZST") == 65
         assert CheckoutSolution().checkout(skus="SZSTXY") == 90
-
+        assert CheckoutSolution().checkout(skus="AAABBDFSZSTXYEFFAA") == 410
