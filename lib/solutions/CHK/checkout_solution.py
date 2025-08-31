@@ -86,6 +86,3 @@ class CheckoutSolution:
                 total += qty * PRICES[item]
 
         return total
-
-
-
